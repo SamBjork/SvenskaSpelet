@@ -1,2 +1,2 @@
 # SvenskaSpelet
-A simple game about the Swedish language.
+A simple game about the Swedish language. 🇸🇪
