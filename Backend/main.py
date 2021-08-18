@@ -20,6 +20,20 @@ class HelloWorld(Resource):
 api.add_resource(HelloWorld, "/hw")
 
 
+class PostUser(Resource):
+    def post_user(self):
+        config = {'host': '127.0.0.1', 'port': 3306, 'user': 'root',
+                  'password': 'secret', 'database': 'SvenskaSpelet'}
+        conn = mariadb.connect(**config)
+        cur = conn.cursor()
+        sql = "INSERT INTO user(username, password, email) "
+        "VALUES (test1, test2, test3); "
+        cur.execute(sql)
+        myresult = cur.fetchall()
+        return "{}".format(myresult)
+        return
+
+
 @app.route('/db')
 def database():
     config = {'host': '127.0.0.1', 'port': 3306, 'user': 'root',
