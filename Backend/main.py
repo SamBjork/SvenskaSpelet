@@ -1,7 +1,8 @@
 from flask import Flask, render_template
 from flask_restful import Api, Resource
 from datetime import datetime
-import mariadb
+import mysql.connector as mariadb
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -17,30 +18,37 @@ class HelloWorld(Resource):
         return{'data': 'Hello World'}
 
 
+class PostUser(Resource):
+    def get(self):
+        mariadb_connection = mariadb.connect(
+            user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
+        create_cursor = mariadb_connection.cursor()
+        create_cursor.execute('Select * From users')
+        # config = {'host': '127.0.0.1', 'port': 3306, 'user': 'root',
+        #           'password': 'secret', 'database': 'SvenskaSpelet'}
+        # conn = mariadb.connect(**config)
+        # cur = conn.cursor()
+        # sql = " "
+        # cur.execute(sql)
+
+        myresult = create_cursor.fetchall()
+        # return
+
+        return "{}".format(myresult)
+
+
 api.add_resource(HelloWorld, "/hw")
 
-
-class PostUser(Resource):
-    def post_user(self):
-        config = {'host': '127.0.0.1', 'port': 3306, 'user': 'root',
-                  'password': 'secret', 'database': 'SvenskaSpelet'}
-        conn = mariadb.connect(**config)
-        cur = conn.cursor()
-        sql = "INSERT INTO user(username, password, email) "
-        "VALUES (test1, test2, test3); "
-        cur.execute(sql)
-        myresult = cur.fetchall()
-        return "{}".format(myresult)
-        return
+api.add_resource(PostUser, "/pu")
 
 
 @app.route('/db')
 def database():
-    config = {'host': '127.0.0.1', 'port': 3306, 'user': 'root',
+    config = {'host': '127.0.0.1:5000', 'port': 3306, 'user': 'root',
               'password': 'secret', 'database': 'SvenskaSpelet'}
     conn = mariadb.connect(**config)
     cur = conn.cursor()
-    sql = "SELECT * FROM user"
+    sql = "Select * From users"
     cur.execute(sql)
     myresult = cur.fetchall()
     return "{}".format(myresult)
