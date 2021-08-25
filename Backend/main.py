@@ -7,20 +7,22 @@ import mysql.connector as mariadb
 app = Flask(__name__)
 api = Api(app)
 
+mariadb_connection = mariadb.connect(
+    user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
+
 
 @app.route('/')
 def index():
-    return 'Flask'
+    return '<h1>Det Svenska Spelet!</h1>'
 
 
+# Test
 class HelloWorld(Resource):
     def get(self):
         return{'data': 'Hello World'}
 
 
 api.add_resource(HelloWorld, "/hw")
-
-# Test
 
 
 @app.route('/<name>')
@@ -30,10 +32,8 @@ def test(name):
 # User
 
 
-@app.route('/gu', methods=["GET"])
-def get():
-    mariadb_connection = mariadb.connect(
-        user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
+@app.route('/user', methods=["GET"])
+def get_users():
     create_cursor = mariadb_connection.cursor()
     create_cursor.execute('Select * From users')
     myresult = create_cursor.fetchall()
@@ -41,41 +41,33 @@ def get():
 
 
 @app.route('/user', methods=["POST"])
-def post():
-    mariadb_connection = mariadb.connect(
-        user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
+def post_user():
     mycursor = mariadb_connection.cursor()
     form_username = request.form['username']
     form_password = request.form['password']
     mycursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)",
                      (form_username, form_password))
     mariadb_connection.commit()
-    print(mycursor, "record inserted.")
-
     return ("record inserted")
 
 
-@app.route('/user/<id>', methods=["PUT"])
-def put(id):
-    mariadb_connection = mariadb.connect(
-        user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
+@app.route('/user/<id>', methods=['PUT'])
+def update_user(id):
     mycursor = mariadb_connection.cursor()
     form_username = request.form['username']
     form_password = request.form['password']
     mycursor.execute("""UPDATE users SET username = %s, password = %s WHERE id = %s
     """, (form_username, form_password, id))
     mariadb_connection.commit()
-    return ("record inserted")
+    return ("user " + id + " is updated")
 
 
-@app.route('/user/<id>', methods=["DELETE"])
+@app.route('/user/<id>', methods=['DELETE'])
 def delete_user(id):
-    mariadb_connection = mariadb.connect(
-        user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
     mycursor = mariadb_connection.cursor()
-    mycursor.execute('DELETE FROM users WHERE id = {0} ', (id))
+    mycursor.execute('DELETE FROM users WHERE id = {0}'.format(id))
     mariadb_connection.commit()
-    return(mycursor.rowcount, "record(s) deleted")
+    return("user " + id + " is deleted")
 
 
 if __name__ == "__main__":
