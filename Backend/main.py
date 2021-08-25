@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_restful import Api, Resource
 from datetime import datetime
 import mysql.connector as mariadb
@@ -20,63 +20,61 @@ class HelloWorld(Resource):
 
 api.add_resource(HelloWorld, "/hw")
 
+# Test
+
+
+@app.route('/<name>')
+def test(name):
+    return 'Your name is ' + name
+
 # User
 
 
-@app.route('/pu')
-def post(self):
-    mariadb_connection = mariadb.connect(
-        user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
-    mycursor = mariadb_connection.cursor()
-    #create_cursor.execute('Select * From users')
-    sql = "INSERT INTO users (username, password) VALUES (%s, %s)"
-    val = ("John", "Highway 21")
-    mycursor.execute(sql, val)
-    mariadb_connection.commit()
-    print(mycursor, "record inserted.")
-
-    return ("record inserted")
-
-
-@app.route('/uu')
-def put(self):
-    mariadb_connection = mariadb.connect(
-        user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
-    mycursor = mariadb_connection.cursor()
-    #create_cursor.execute('Select * From users')
-    sql = "UPDATE users SET username = 'first' WHERE id = 1"
-    mycursor.execute(sql)
-    mariadb_connection.commit()
-    print(mycursor, "record inserted.")
-
-    return ("record inserted")
-
-
-@app.route('/gu')
-def get(self):
+@app.route('/gu', methods=["GET"])
+def get():
     mariadb_connection = mariadb.connect(
         user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
     create_cursor = mariadb_connection.cursor()
     create_cursor.execute('Select * From users')
-
     myresult = create_cursor.fetchall()
-    # return
-
     return "{}".format(myresult)
 
 
-@app.route('/du')
-def delete_user(self):
+@app.route('/user', methods=["POST"])
+def post():
     mariadb_connection = mariadb.connect(
         user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
     mycursor = mariadb_connection.cursor()
-    sql = "DELETE FROM users WHERE id = '1'"
-
-    mycursor.execute(sql)
-
+    form_username = request.form['username']
+    form_password = request.form['password']
+    mycursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)",
+                     (form_username, form_password))
     mariadb_connection.commit()
+    print(mycursor, "record inserted.")
 
-    print(mycursor.rowcount, "record(s) deleted")
+    return ("record inserted")
+
+
+@app.route('/user/<id>', methods=["PUT"])
+def put(id):
+    mariadb_connection = mariadb.connect(
+        user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
+    mycursor = mariadb_connection.cursor()
+    form_username = request.form['username']
+    form_password = request.form['password']
+    mycursor.execute("""UPDATE users SET username = %s, password = %s WHERE id = %s
+    """, (form_username, form_password, id))
+    mariadb_connection.commit()
+    return ("record inserted")
+
+
+@app.route('/user/<id>', methods=["DELETE"])
+def delete_user(id):
+    mariadb_connection = mariadb.connect(
+        user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
+    mycursor = mariadb_connection.cursor()
+    mycursor.execute('DELETE FROM users WHERE id = {0} ', (id))
+    mariadb_connection.commit()
     return(mycursor.rowcount, "record(s) deleted")
 
 
