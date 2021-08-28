@@ -1,33 +1,29 @@
-import logo from './ssr.png';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
-
+import Home from './components/pages/Home';
+import Login from './components/pages/Login';
+import Leaderboard from './components/pages/Leaderboard';
+import Add from './components/pages/Add';
 
 
 
 function App() {
 
-  function sayHello(){
-    alert("Hello! Soon you can log in here")
-  }
+  // function sayHello(){
+  //   alert("Hello! Soon you can log in here")
+  // }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} id="App-logo" alt="logo" />
-        <br/>
-        Välkommen till
-          <br/>
-          "Svenska Spelet"
-        <button onClick={sayHello}>
-          Logga in
-        </button>
-        <button onClick={sayHello}>
-          Registera dig
-        </button>
-        <button onClick={sayHello}>
-          Se topplistan
-        </button>
-      </header>
-    </div>
+    <>
+    <Router>
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/login' component={Login} />
+        <Route path='/leaderboard' component={Leaderboard} />
+        <Route path='/add' component={Add} />
+      </Switch>
+    </Router>
+  </>
   );
 }
 

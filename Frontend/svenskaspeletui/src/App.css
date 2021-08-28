@@ -1,3 +1,11 @@
+html,
+body {
+  margin: 0;
+  background-color: #282c34;
+}
+
+/* Home */
+
 .App {
   text-align: center;
 }
@@ -5,12 +13,6 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -30,11 +32,12 @@
 
 #App-logo {
   padding: 5px;
-  animation: spin 14s linear infinite;
+  animation: spin 12s linear infinite;
 }
 
 #App-logo:hover {
-  animation-duration: 2s;
+  /* animation-duration: 2s; */
+  opacity: 0.9;
 }
 
 @keyframes spin {
@@ -43,9 +46,38 @@
   }
 }
 
+/* misc */
+
+.error {
+  color: red;
+}
+
+.text {
+  margin: 10px;
+}
+
+input {
+  padding: 8px;
+  margin: 5px;
+}
+
+input[type="submit"] {
+  background-color: #696969;
+  border: none;
+  color: white;
+  padding: 12px 32px;
+  text-decoration: none;
+  margin: 2px 2px;
+  cursor: pointer;
+}
+
 p {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+h4 {
+  font-weight: lighter;
 }
 
 button {

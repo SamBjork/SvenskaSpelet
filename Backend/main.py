@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_restful import Api, Resource
 from datetime import datetime
 import mysql.connector as mariadb
+import json
 
 
 app = Flask(__name__)
@@ -29,6 +30,26 @@ api.add_resource(HelloWorld, "/hw")
 def test(name):
     return 'Your name is ' + name
 
+# Login
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    create_cursor = mariadb_connection.cursor()
+    form_username = request.form['username']
+    form_password = request.form['password']
+    create_cursor.execute(" SELECT * FROM Users WHERE username = %s AND password = %s",
+                          (form_username, form_password))
+    myresult = create_cursor.fetchall()
+    if(myresult != []):
+        username = myresult[0][1]
+        password = myresult[0][2]
+    else:
+        return "you entered incorrect credentials", 403
+    if(password == form_password and username == form_username):
+        return "{}".format(myresult)
+    else:
+        return "you entered incorrect credentials", 403
 # User
 
 
