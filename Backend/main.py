@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request
+from flask_cors import CORS, cross_origin
 from flask_restful import Api, Resource
 from datetime import datetime
 import mysql.connector as mariadb
 import json
 
-
 app = Flask(__name__)
 api = Api(app)
+CORS(app, support_credentials=True)
 
 mariadb_connection = mariadb.connect(
     user='root', password='secret', host='127.0.0.1', port=3306, database='SvenskaSpelet')
@@ -34,6 +35,7 @@ def test(name):
 
 
 @app.route('/login', methods=['GET', 'POST'])
+@cross_origin(supports_credentials=True)
 def login():
     create_cursor = mariadb_connection.cursor()
     form_username = request.form['username']
@@ -64,8 +66,8 @@ def get_users():
 @app.route('/user', methods=["POST"])
 def post_user():
     mycursor = mariadb_connection.cursor()
-    form_username = request.form['username']
-    form_password = request.form['password']
+    form_username = request.form.get['username', False]
+    form_password = request.form.get['password', False]
     mycursor.execute("INSERT INTO Users (username, password) VALUES (%s, %s)",
                      (form_username, form_password))
     mariadb_connection.commit()

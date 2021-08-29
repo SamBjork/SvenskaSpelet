@@ -9,10 +9,6 @@ import LoginForm from '../../components/LoginForm';
 
 
 function Home() {
-    const adminUser = {
-        email: "admin@admin.com",
-        password: "admin"
-    }
 
     const [user, setUser] = useState({username: ""});
     const [login, setLogin] = useState({isLoggedin: false})
@@ -27,7 +23,7 @@ const Login = details => {
     setLogin(true)
     console.log(details)
 
-    if (details.username == adminUser.username && details.password == adminUser.password )
+    if (this.state )
     {
         setUser({
             username: details.username,
@@ -37,7 +33,7 @@ const Login = details => {
     }
 
     else{
-        setError("Email och lösenord stämmer inte!")
+        setError("Användarnamn och lösenord stämmer inte!")
     }
 
 }
