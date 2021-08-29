@@ -10,40 +10,40 @@ import LoginForm from '../../components/LoginForm';
 
 function Home() {
 
-    const [user, setUser] = useState({username: ""});
-    const [login, setLogin] = useState({isLoggedin: false})
-    const [error, setError] = useState("");
+//     const [user, setUser] = useState({username: ""});
+//     const [login, setLogin] = useState({isLoggedin: false})
+//     const [error, setError] = useState("");
 
-const OpenLogin = () => {
-        setLogin(true)
-    }
+// const OpenLogin = () => {
+//         setLogin(true)
+//     }
 
-const Login = details => {
+// const Login = details => {
 
-    setLogin(true)
-    console.log(details)
+//     setLogin(true)
+//     console.log(details)
 
-    if (this.state )
-    {
-        setUser({
-            username: details.username,
-            password: details.password
-        })
-        setLogin(false)
-    }
+//     if (this.state )
+//     {
+//         setUser({
+//             username: details.username,
+//             password: details.password
+//         })
+//         setLogin(false)
+//     }
 
-    else{
-        setError("Användarnamn och lösenord stämmer inte!")
-    }
+//     else{
+//         setError("Användarnamn och lösenord stämmer inte!")
+//     }
 
-}
+// }
 
-const Logout = () => {
-    setUser({
-        username: "",
-        password: ""
-    })
-}
+// const Logout = () => {
+//     setUser({
+//         username: "",
+//         password: ""
+//     })
+// }
 
 
 
@@ -57,7 +57,7 @@ const Logout = () => {
                 Välkommen till
                 <br/>
                 "Svenska Spelet"
-            {(user.username != "") ? (
+            {/* {(user.username != "") ? (
                 <div className="welcome">
                     <h2>Välkommen, <span>{user.username}</span></h2>
                     <button onClick={Logout}>Logga ut</button>
@@ -73,11 +73,11 @@ const Logout = () => {
                 <Button onClick={OpenLogin}>
                 Logga in
                 </Button>  
-            )}
+            )} */}
                 
-                <Link to="/register">
+                <Link to="/game">
                 <Button>
-                Registera dig
+                Spela
                 </Button>
                 </Link>
                 <Link to="/leaderboard">
