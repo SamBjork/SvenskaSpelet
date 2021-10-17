@@ -1,7 +1,7 @@
 html,
 body {
   margin: 0;
-  background-color: #282c34;
+  background-image: linear-gradient(to right, #ece148, #073eb6);
 }
 
 /* Home */
@@ -11,12 +11,11 @@ body {
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 10vmin;
   pointer-events: none;
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -46,7 +45,101 @@ body {
   }
 }
 
+/* Game */
+.background {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background-image: linear-gradient(to right, #cec333, #124bc5);
+}
+
+.welcome-container {
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+}
+.welcome-container-loading {
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border: solid black;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.question {
+  font-size: 30px;
+}
+
+.right-answer,
+.wrong-answer {
+  width: 90px;
+
+  cursor: pointer;
+}
+
+.right-answer {
+}
+
+.wrong-answer {
+}
+
 /* misc */
+
+label {
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.input {
+  font-size: 20px;
+  width: 220px;
+  text-align: center;
+}
+
+input[type="text"],
+select {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
 
 .error {
   color: red;
@@ -69,6 +162,7 @@ input[type="submit"] {
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;
+  display: inline-block;
 }
 
 p {
@@ -91,4 +185,21 @@ button {
 
 button:hover {
   cursor: pointer;
+}
+
+.wrong-answer {
+  display: inline-block;
+  width: 400px;
+}
+
+.right-answer {
+  display: inline-block;
+  width: 400px;
+}
+
+.welcome-text-loading {
+  margin-top: 170px;
+  top: 50%;
+  align-self: center;
+  padding: 10px;
 }
